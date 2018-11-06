@@ -1,16 +1,22 @@
 // Author: 				Aparna Chougale
 // Date Created:		06/10/2018
 // Last Modified:		06/10/2018
-// Description: This program reads .CSV file, write it on Console, then sort the data by two columns - EH_cm and PH_cm, and print top three results on console.
+// Description: This program reads .CSV file, write it on Console, then sort the data by two columns - EH_cm and PH_cm, and print the sorted data on console.
 // Input: input-data.csv
-// Output: print top three results in YAML format sorted by two columns EH-cm and PH_cm to console
+// Output: print sorted data by two columns EH-cm and PH_cm to console
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.yaml.snakeyaml.DumperOptions;
+import org.yaml.snakeyaml.Yaml;
 
 public class CLI_TOOL {
 
@@ -26,13 +32,14 @@ public class CLI_TOOL {
 	{
 		readCSVFile(CSV_PATH); //file read method called 
 		
-//		System.out.println("UNSORTED DATA from .csv File:\n-"
-//				+ "-----------------------------------------------------------------------------------------");
-//		for(String aDataString: aList)
-//		{
-//			//printing unsorted data on console
-//			System.out.println(aDataString +"\n");
-//		}
+		System.out.println("UNSORTED DATA from .csv File:\n-"
+				+ "-----------------------------------------------------------------------------------------");
+		
+		for(String aDataString: aList)
+		{
+			//printing unsorted data on console
+			System.out.println(aDataString +"\n");
+		}
 
 		// resizable array list initialization
 		ArrayList<CLI_Data> aListData = convertToSortData(aList);
@@ -115,5 +122,7 @@ public class CLI_TOOL {
     });
     return Cli_data;
 }
+
+
 
 }
