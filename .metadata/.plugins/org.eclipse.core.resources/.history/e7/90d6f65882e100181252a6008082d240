@@ -1,0 +1,122 @@
+// Author: 				Aparna Chougale
+// Date Created:		06/10/2018
+// Last Modified:		06/10/2018
+// Description: This program reads .CSV file, write it on Console, then sort the data by two columns - EH_cm and PH_cm, and print the sorted data on console.
+// Input: input-data.csv
+// Output: print sorted data by two columns EH-cm and PH_cm to console
+
+import java.io.BufferedReader;
+import java.io.FileReader; 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+
+public class CLI_TOOL 
+{
+
+	//Variable declaration
+	public static final String CSV_PATH = "input-data.csv"; //path to .csv file
+	public static boolean append = true;
+	//array list 
+	public static ArrayList<String> aList = new ArrayList<String>();
+	static String s;
+
+	//main method
+	public static void main(String[] args) throws IOException 
+	{
+		readCSVFile(CSV_PATH); //file read method called 
+		
+		System.out.println("UNSORTED DATA from .csv File:\n-"
+				+ "-----------------------------------------------------------------------------------------");
+		
+		for(String aDataString: aList)
+		{
+			//printing unsorted data on console
+			System.out.println(aDataString +"\n");
+		}
+
+		// resizable array list initialization
+		ArrayList<CLI_Data> aListData = convertToSortData(aList);
+		
+		// Printing output: sorted data
+		System.out.println("\nSORTED .CSV File (by column EH_cm and PH_cm):\n--------------------------------------------------------");
+   		for(CLI_Data data : aListData)
+   		{	
+				s=data.toString();
+				//printing sorted .csv file on console
+				System.out.println(s);
+   		}
+   			
+		
+	}
+
+	//file read method 
+	public static ArrayList<String> readCSVFile(String path) throws IOException
+	{
+		//fileReader open .csv file
+		FileReader fileReader = new FileReader(path);
+		
+		//BufferedReader reads file line by line(i.e. one line at a time)
+		BufferedReader bufferedReader = new BufferedReader(fileReader);
+		String sLine = null;
+		while( (sLine = bufferedReader.readLine()) != null)// read file until eof
+		{
+			aList.add(sLine); //adding data/elements to array list
+		}
+		
+		//file close
+		bufferedReader.close();
+
+		return aList; //returns array list
+
+	}
+
+	//arraylist 
+	public static ArrayList<CLI_Data> convertToSortData(ArrayList<String> dataStrings) 
+	{
+		//creating arraylist of type CLI_Data
+		ArrayList<CLI_Data> Cli_data = new ArrayList<>();
+		dataStrings.remove(0);
+		for(String sDataString : dataStrings) 
+		{
+			// Splitting the line by , character to store the data element separately.
+			String[] parts = sDataString.split(",");
+     
+			//storing separated data elements locally 
+			String sENTRY_TYPE = parts[0];
+			String PlantingDate = parts[1];
+			int GID = Integer.valueOf(parts[2]);
+			String DESIGNATION = parts[3];
+			int ENTRY_NO=Integer.valueOf(parts[4]);
+			int EH_cm=Integer.valueOf(parts[5]);
+			int PH_cm=Integer.valueOf(parts[6]);
+			int DTA_days__obs=Integer.valueOf(parts[7]);
+			int DTS_days__obs=Integer.valueOf(parts[8]);
+        	float Moi_pct__STD=Float.valueOf(parts[9]);
+        	int GW_g_FieldWB=Integer.valueOf(parts[10]);
+        	int EarsHvst_ears_plot=Integer.valueOf(parts[11]);
+        	int RLodg_pl_plot=Integer.valueOf(parts[12]);
+        	int SLodg_pl_plot=Integer.valueOf(parts[13]);
+        	int REP_NO=Integer.valueOf(parts[14]);
+        	int PLOT_NO=Integer.valueOf(parts[15]);
+        	int column=Integer.valueOf(parts[16]);
+        	int row=Integer.valueOf(parts[17]);
+        	
+        	// storing data element to dataclass: CLI_Data.class
+        	Cli_data.add(new CLI_Data(sENTRY_TYPE, PlantingDate, GID, DESIGNATION,ENTRY_NO,EH_cm,PH_cm,DTA_days__obs,DTS_days__obs,Moi_pct__STD,GW_g_FieldWB,EarsHvst_ears_plot,RLodg_pl_plot,SLodg_pl_plot,REP_NO,PLOT_NO,column,row));
+		}	
+
+		//sorting list
+    Collections.sort(Cli_data, new Comparator<CLI_Data>() 
+    {
+        @Override
+        public int compare(CLI_Data o1, CLI_Data o2) 
+        {
+            return o1.compareTo(o2);
+        } 
+    });
+    return Cli_data;
+}
+
+}

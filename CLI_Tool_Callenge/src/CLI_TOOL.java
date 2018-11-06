@@ -12,7 +12,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class CLI_TOOL {
+public class CLI_TOOL 
+{
 
 	//Variable declaration
 	public static final String CSV_PATH = "input-data.csv"; //path to .csv file
@@ -35,7 +36,7 @@ public class CLI_TOOL {
 			System.out.println(aDataString +"\n");
 		}
 
-		// resizable array list initialization
+		// Resizable array list initialization
 		ArrayList<CLI_Data> aListData = convertToSortData(aList);
 		
 		// Printing output: sorted data
